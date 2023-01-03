@@ -1,0 +1,138 @@
+*** Settings ***
+Library    SeleniumLibrary
+Library    Collections
+Variables    ../Locators/Locators.py
+Library    XML
+
+*** Keywords ***
+Ouvrir navigateur
+    [Arguments]    ${vURL}    ${vBrowser}
+    Open Browser    ${vURL}    ${vBrowser}
+    Maximize Browser Window
+Ajouter utilisateur double
+    [Arguments]    ${First_Name}    ${Last_Name}    ${EMail}    ${Tel}    ${Password}    ${Conf_password}
+    # Click sur le lien My Account.
+    Click Element    ${Link_My_Account}
+    Click Element    ${Link_register}
+    Input Text    ${txt_First_Name}    ${First_Name}
+    Input Text    ${txt_Last_Name}    ${Last_Name}
+    Input Text    ${txt_Mail}    ${EMail}
+    Input Text    ${txt_Telephone}    ${Tel}
+    Input Password    ${txt_Password}    ${Password}
+    Input Password    ${txt_Password_confirm}    ${Conf_password}
+    Select Checkbox    ${CheckBox}
+    Click Button    ${Btn_Continue}
+    Page Should Contain Element    ${Warning}    
+    Sleep    2
+Fermer navigateur
+    Close All Browsers
+
+
+Register
+    [Arguments]     ${vURL}    ${vBrowser}    ${vFirst_Name}    ${vLast_Name}    ${vE_mail}    ${vTelephone}    ${vPassword}    ${vConfirm_Passwrd}
+    #Ouvrir le naviagateur
+    Open Browser    ${vURL}    ${vBrowser}   
+    #maximiser la fenetre
+    Maximize Browser Window
+    #cliquer sur le lien My Account
+    Wait Until Element Is Visible    ${lien_My_Accnt}
+    Click Element    ${lien_My_Accnt}
+    #cliquer sur le lien Register
+    Click Element    ${lien_Register}
+    #Saisir le First name
+    Input Text    ${txt_Frst_Nme}    ${vFirst_Name}
+    #Saisir last name
+    Input Text    ${txt_Lst_nme}    ${vLast_Name}
+    #Saisir E-Mail
+    Input Text    ${txt_Mail}    ${vE_mail} 
+    #Saisir Telephone
+    Input Text    ${txt_Tlf}   ${vTelephone} 
+    #Saisir Password
+    Input Password    ${txt_Pw}    ${vPassword} 
+    #Confirm Password
+    Input Password    ${cnfrm_Pw}    ${vConfirm_Passwrd} 
+    #Cocher Yes a la Newsletter
+    Select Checkbox    ${btn_Ys}
+    #Cocher Privacy
+    Select Checkbox    ${chck_Bx}
+    #Cliquer sur le bouton Continue
+    Click Button    ${btn_Cntn}
+
+login
+    [Arguments]    ${vURL}    ${vBrowser}    ${vE_mail}    ${vPassword}       
+    #Ouvrir le naviagateur
+    Open Browser    ${vURL}    ${vBrowser}   
+    #maximiser la fenetre
+    Maximize Browser Window
+    #cliquer sur le lien My Account
+    Click Element    ${lien_My_Accnt}
+    #cliquer sur le lien login
+    Click Element    ${lien_login}
+    
+Rechercher des Produits
+    [Arguments]    ${vprdt_Rchrch}
+    #Saisir le produit a rechercher
+    Input Text    ${srch_box}   ${vprdt_Rchrch} 
+    #press le bouton entrer
+    Press Keys   ${srch_box}    RETURN
+
+Informer le client lorsque produit indisponible
+     [Arguments]    ${Qtty}
+     #cliquer sur le produit qu'on veut acheter
+     Click Element    ${prdt_Rchrch}
+     #Saisir la quantité voulue
+     
+     Input Text    ${txt_Qty}    ${Qtty}
+     #cliquer sur le bouton Add to cart
+     Click Element    ${btn_Add_To_Crt}
+     #cliquer sur le lien Checkout
+     Click Element    ${lien_Chckt}
+     #Vérifier le message d'alerte
+     Page Should Contain    Products marked with *** are not available in the desired quantity or not in stock!
+
+
+Inscription
+    [Arguments]    ${vURL}    ${vBrowser}    ${vfName}    ${vlName}    ${vCourriel}    ${vNtel}    ${vTextPaswd}    ${vConfPaswd}    #${vCourriel_2}    
+    Open Browser    ${vURL}    ${vBrowser}
+    Maximize Browser Window  
+    Click Element    ${myAccount}  
+    Sleep    1  
+    Click Element    ${link_Register}
+    Sleep    1
+    Input Text    ${f_Name}    ${vfName}
+    Input Text    ${l_Name}    ${vlName}
+    Input Text    ${courriel}    ${vCourriel}    
+    Input Text    ${n_Tel}    ${vNtel}    
+    Input Password    ${text_Paswd}    ${vTextPaswd}
+    Input Password    ${conf_Paswd}    ${vConfPaswd}
+    Click Button    ${lien_Newsletter}    
+    Select Checkbox    ${lien_Agree}
+    Click Button    ${btn_Continue}
+    Page Should Contain    Your Account Has Been Created!
+    Sleep    2
+    Click Element    ${btn_Continue2}
+    Sleep    1
+    #Click Element    ${lien_Edit_Compte}
+    #Sleep    1
+    #Clear Element Text    ${champ_Email}
+    #Sleep    1
+    #Input Text    ${champ_Email}    ${vCourriel_2}
+    #Sleep    1
+    #Click Element    ${btn_Submit}
+    #Page Should Contain     Success: Your account has been successfully updated.
+
+Logout
+    Click Element    ${myAccount}
+    Click Element    ${logout}
+    Click Element    ${btn_Submit2}
+    Log Title
+
+
+
+
+
+
+
+    
+
+
